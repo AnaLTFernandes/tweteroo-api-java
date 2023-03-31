@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.api.tweteroo.dto.TweetDTO;
@@ -32,5 +35,15 @@ public class TweetService {
 
     public List<Tweet> findByUsernameEquals(String username) {
         return repository.findByUsernameEquals(username);
+    }
+
+    public Page<Tweet> findAll(int page) {
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.DESC, "id");
+        return repository.findAll(pageRequest);
+    }
+
+    public Page<Tweet> findAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.Direction.DESC, "id");
+        return repository.findAll(pageRequest);
     }
 }

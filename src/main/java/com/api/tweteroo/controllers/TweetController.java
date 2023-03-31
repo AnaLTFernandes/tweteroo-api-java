@@ -4,14 +4,17 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.tweteroo.dto.TweetDTO;
@@ -20,6 +23,7 @@ import com.api.tweteroo.services.TweetService;
 
 import jakarta.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/tweets")
 public class TweetController {
@@ -42,6 +46,13 @@ public class TweetController {
     public ResponseEntity<List<Tweet>> listByUsersname(@PathVariable String username) {
         HttpHeaders responseHeaders = new HttpHeaders();
         List<Tweet> tweets = service.findByUsernameEquals(username);
+        return new ResponseEntity<>(tweets, responseHeaders, HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<Tweet>> listAll(@RequestParam int page) {
+        HttpHeaders responseHeaders = new HttpHeaders();
+        Page<Tweet> tweets = service.findAll(page);
         return new ResponseEntity<>(tweets, responseHeaders, HttpStatus.OK);
     }
 }
