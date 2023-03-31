@@ -29,4 +29,8 @@ public class TweetService {
         Tweet newTweet = new Tweet(user, users.get(0).getUsername());
         repository.save(newTweet);
     }
+
+    public List<Tweet> findByUsernameEquals(String username) {
+        return repository.findByUsernameEquals(username);
+    }
 }
