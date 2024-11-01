@@ -1,5 +1,7 @@
 # :bird: Tweteroo Api
 
+![Badge Finalizado](https://img.shields.io/static/v1?label=STATUS&message=FINALIZADO&color=success&style=for-the-badge)
+
 # Índice
 
 - [Sobre](#Sobre)
